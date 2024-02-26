@@ -1,0 +1,32 @@
+#!/bin/bash
+DISTRO=$( grep '^NAME' /etc/os-release | cut -d = -f 2 | tr -d '"' )
+OS=$(uname -s)
+
+if [ $OS = 'Linux' ]; then
+    sudo apt-get update
+    
+    echo "Installing wget/curl"
+    sudo apt-get install wget curl
+
+    echo "Installing exa"
+    sudo apt-get install exa
+
+    echo "Installing zsh"
+    sudo apt-get install zsh
+
+    echo "Installing oh-my-zsh"
+    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+    ccho "Installing starship theme"
+    curl -sS https://starship.rs/install.sh | sh
+
+    
+    echo "installing node version manager (nvm)"
+    wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
+    # create folder structure
+    echo "Creating folder structure"
+    mkdir -p ~/programming
+
+    echo "Done!"
+fi
